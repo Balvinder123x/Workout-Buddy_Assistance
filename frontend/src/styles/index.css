@@ -1,0 +1,131 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/*
+ * Theme variables. The app is built dark-first; accent colors (violet/cyan/
+ * coral) stay constant, while surface (`ink`) and text (`cream`) colors flip
+ * between themes. Because components use bg-ink-* for surfaces and text-cream
+ * for text, redefining these two families flips the whole UI. `--glass-*` and
+ * `--line` tune the glass overlays that don't read well when simply inverted.
+ */
+:root,
+.dark {
+  --ink-950: 10 10 18;
+  --ink-900: 15 15 26;
+  --ink-800: 22 22 42;
+  --ink-700: 31 31 56;
+  --ink-600: 42 42 74;
+  --cream: 245 243 239;
+  --glass-bg: 255 255 255;
+  --glass-bg-alpha: 0.05;
+  --glass-strong-bg: var(--ink-800);
+  --glass-strong-alpha: 0.7;
+  --line: 255 255 255;
+  --line-alpha: 0.1;
+}
+
+.light {
+  /* Surfaces become light; the darkest "ink" is the page background. */
+  --ink-950: 244 244 249;
+  --ink-900: 238 238 245;
+  --ink-800: 255 255 255;
+  --ink-700: 226 226 236;
+  --ink-600: 214 214 226;
+  /* Text becomes dark. */
+  --cream: 24 24 37;
+  --glass-bg: 255 255 255;
+  --glass-bg-alpha: 0.7;
+  --glass-strong-bg: 255 255 255;
+  --glass-strong-alpha: 0.85;
+  --line: 20 20 40;
+  --line-alpha: 0.1;
+}
+
+@layer base {
+  body {
+    @apply bg-ink-950 font-body text-cream antialiased;
+    margin: 0;
+  }
+
+  ::selection {
+    @apply bg-violet-500/40 text-cream;
+  }
+}
+
+@layer components {
+  /* Glassmorphism surface used across cards, navbar, sidebar. Theme-aware via
+     CSS variables so it works in both dark and light modes. */
+  .glass {
+    background: rgb(var(--glass-bg) / var(--glass-bg-alpha));
+    border: 1px solid rgb(var(--line) / var(--line-alpha));
+    @apply backdrop-blur-xl;
+  }
+
+  .glass-strong {
+    background: rgb(var(--glass-strong-bg) / var(--glass-strong-alpha));
+    border: 1px solid rgb(var(--line) / var(--line-alpha));
+    @apply backdrop-blur-2xl;
+  }
+
+  .gradient-text {
+    @apply bg-motion-gradient bg-clip-text text-transparent;
+  }
+
+  .btn-primary {
+    @apply rounded-xl bg-motion-gradient px-5 py-2.5 font-medium text-ink-950
+      shadow-lg shadow-violet-500/20 transition
+      hover:shadow-violet-500/40 focus-visible:outline focus-visible:outline-2
+      focus-visible:outline-offset-2 focus-visible:outline-violet-400
+      disabled:opacity-60;
+  }
+
+  .btn-ghost {
+    @apply rounded-xl border border-white/10 px-5 py-2.5 font-medium text-cream
+      transition hover:border-white/25 hover:bg-white/5
+      focus-visible:outline focus-visible:outline-2 focus-visible:outline-violet-400;
+  }
+
+  .input {
+    @apply w-full rounded-lg border border-white/10 bg-ink-900 px-3 py-2
+      text-sm text-cream outline-none transition focus:border-violet-500;
+  }
+}
+
+/* Respect users who prefer reduced motion. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* Keyboard focus visibility catch-all for interactive elements. */
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible,
+[role="switch"]:focus-visible {
+  outline: 2px solid theme(colors.violet.400);
+  outline-offset: 2px;
+}
+
+/* Subtle themed scrollbar. */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 9999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.2);
+}

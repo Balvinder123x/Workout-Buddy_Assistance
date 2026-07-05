@@ -1,0 +1,161 @@
+{
+  "data_source": "synthetic bootstrap (4000 samples)",
+  "classes": [
+    "squat",
+    "pushup",
+    "curl",
+    "shoulder-press",
+    "lunge"
+  ],
+  "feature_names": [
+    "elbow_angle_left",
+    "elbow_angle_right",
+    "shoulder_angle_left",
+    "shoulder_angle_right",
+    "hip_angle_left",
+    "hip_angle_right",
+    "knee_angle_left",
+    "knee_angle_right",
+    "wrist_height_left",
+    "wrist_height_right",
+    "ankle_height_left",
+    "ankle_height_right",
+    "posture_aspect",
+    "torso_ratio"
+  ],
+  "best_model": "MLP",
+  "results": [
+    {
+      "model": "RandomForest",
+      "accuracy": 0.97375,
+      "precision_macro": 0.9737572094504745,
+      "recall_macro": 0.9737500000000001,
+      "f1_macro": 0.9737051308863196,
+      "confusion_matrix": [
+        [
+          151,
+          0,
+          5,
+          0,
+          4
+        ],
+        [
+          0,
+          160,
+          0,
+          0,
+          0
+        ],
+        [
+          6,
+          0,
+          151,
+          0,
+          3
+        ],
+        [
+          0,
+          0,
+          0,
+          160,
+          0
+        ],
+        [
+          2,
+          0,
+          1,
+          0,
+          157
+        ]
+      ]
+    },
+    {
+      "model": "XGBoost",
+      "accuracy": 0.975,
+      "precision_macro": 0.9749527835017299,
+      "recall_macro": 0.975,
+      "f1_macro": 0.9749274352191082,
+      "confusion_matrix": [
+        [
+          153,
+          0,
+          5,
+          0,
+          2
+        ],
+        [
+          0,
+          160,
+          0,
+          0,
+          0
+        ],
+        [
+          8,
+          0,
+          149,
+          0,
+          3
+        ],
+        [
+          0,
+          0,
+          0,
+          160,
+          0
+        ],
+        [
+          0,
+          0,
+          2,
+          0,
+          158
+        ]
+      ]
+    },
+    {
+      "model": "MLP",
+      "accuracy": 0.97625,
+      "precision_macro": 0.9762766326875992,
+      "recall_macro": 0.9762500000000001,
+      "f1_macro": 0.9762331123991077,
+      "confusion_matrix": [
+        [
+          153,
+          0,
+          5,
+          0,
+          2
+        ],
+        [
+          1,
+          159,
+          0,
+          0,
+          0
+        ],
+        [
+          7,
+          0,
+          151,
+          1,
+          1
+        ],
+        [
+          0,
+          0,
+          0,
+          160,
+          0
+        ],
+        [
+          1,
+          0,
+          1,
+          0,
+          158
+        ]
+      ]
+    }
+  ]
+}

@@ -1,0 +1,35 @@
+# Render blueprint. From the Render dashboard: New > Blueprint, point it at
+# this repo, and it provisions the web service + a Postgres database.
+#
+# After the first deploy, set CORS_ORIGINS (below) to your real Vercel URL.
+services:
+  - type: web
+    name: smart-workout-buddy-api
+    runtime: python
+    rootDir: backend
+    buildCommand: pip install -r requirements.txt
+    startCommand: uvicorn app.main:app --host 0.0.0.0 --port $PORT
+    healthCheckPath: /api/health
+    envVars:
+      - key: PYTHON_VERSION
+        value: "3.12"
+      # Provisioned automatically from the database below.
+      - key: DATABASE_URL
+        fromDatabase:
+          name: smart-workout-buddy-db
+          property: connectionString
+      # Enables SameSite=None; Secure cookies for the Vercel <-> Render split.
+      - key: COOKIE_CROSS_SITE
+        value: "true"
+      # IMPORTANT: replace with your actual Vercel URL(s) after deploying the
+      # frontend. Comma-separated, no trailing slash. Include the preview URL
+      # too if you want previews to work.
+      - key: CORS_ORIGINS
+        value: "https://YOUR-APP.vercel.app"
+      # Optional: enable the Gemini-backed coach.
+      - key: GEMINI_API_KEY
+        sync: false
+
+databases:
+  - name: smart-workout-buddy-db
+    plan: free
